@@ -19,6 +19,17 @@ if [[ -n $1 ]]; then
         sudo docker-compose restart 
         exit 1
     fi
+    #删除环境
+    if [[ $1 = "remove" ]]; then
+        sudo docker-compose stop
+        sudo docker-compose rm
+
+        work_dir=/
+        cd $work_dir
+        sudo rm -rf /docker
+
+        exit 1
+    fi
 fi
 
 read -t 30 -p "Git,Docker and Docker-Compose installed?[y/N]" result
