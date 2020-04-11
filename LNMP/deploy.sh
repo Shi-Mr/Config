@@ -87,7 +87,7 @@ if [ ! -f nginx/conf/nginx.conf ]; then
 	exit 1;
     fi
     
-    sudo rm -rf Config
+    sudo rm -rf /docker/Config
 fi
 
 echo "Starting container..."

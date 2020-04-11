@@ -49,7 +49,7 @@ RUN ./configure  \
 RUN usermod -u 1000 nginx
 
 RUN mv /opt/soft/nginx.conf /etc/nginx/nginx.conf
-RUN mv /opt/soft/sites-enabled/ /etc/nginx/conf.d/
+RUN mv /opt/soft/sites-enabled/* /etc/nginx/conf.d/
 
 RUN mkdir /www/web && mkdir /www/nginx/log
 
