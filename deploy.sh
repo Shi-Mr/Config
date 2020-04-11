@@ -5,21 +5,23 @@ if [[ -n $1 ]]; then
     cd $work_dir
 
     #启动容器
-    if [[$1 = "start"]]; then
+    if [[ $1 = "start" ]]; then
         sudo docker-compose up -d
+        exit 1
     fi
     #停止容器
-    if [[$1 = "stop"]]; then
+    if [[ $1 = "stop" ]]; then
         sudo docker-compose stop
+        exit 1
     fi
     #重启容器
-    if [[$1 = "restart"]]; then
+    if [[ $1 = "restart" ]]; then
         sudo docker-compose restart 
+        exit 1
     fi
-    exit 1
 fi
 
-read -t 30 -p "Git,Docker and Docker-Compose installed? [y/N]" result
+read -t 30 -p "Git,Docker and Docker-Compose installed?[y/N]" result
 if [ $result != "y" ]; then
     echo "Installation interruption"
     exit 1;
@@ -29,7 +31,7 @@ work_dir=/
 cd $work_dir
 
 if [ ! -d /docker/ ]; then
-    sudo mkdir -p docker/{nginx/{vhost,conf,log},wwwroot}
+    sudo mkdir docker
 fi
 
 work_dir=/docker
@@ -39,24 +41,20 @@ if [ ! -f nginx/conf/nginx.conf ]; then
     if [ ! -d Config ]; then
         echo "Start downloading profile..."
         sudo git clone https://github.com/Shi-Mr/Config.git
+        if [[ $? != 0 ]]; then
+            exit 1
+        fi
         echo "Profile download succeeded..."
     fi
+    sudo mkdir -p {nginx/{vhost,conf,log},wwwroot}
     echo "Start copying profile..."
     sudo mv Config/Nginx/Conf/nginx.conf ./nginx/conf
     sudo mv Config/Nginx/Conf/default.conf ./nginx/vhost
     sudo mv Config/Docker-Compose/docker-compose.yml ./
-    sudo mv Config/Nginx/Html/index.html ./wwwroot
+    sudo mv Config/Nginx/Html/index.html ./wwwroot/
     echo "Profile copy successfully..."
     sudo rm -rf Config
 fi
 
-sudo docker-compose up -d
-
-
-
-
-
-
-
-
-
+echo "Starting container..."
+docker-compose up -d

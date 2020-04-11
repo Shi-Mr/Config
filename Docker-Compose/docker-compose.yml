@@ -27,9 +27,9 @@ services: #容器的集合
                 ports:
                         - 80:80
                 volumes:
-                        - /docker/Nginx/vhost:/www/nginx/vhost
-                        - /docker/Nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
-                        - /docker/Nginx/log:/www/nginx/log
+                        - /docker/nginx/vhost:/www/nginx/vhost
+                        - /docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+                        - /docker/nginx/log:/www/nginx/log
                         - /docker/wwwroot:/www/web
 
         redis: 
