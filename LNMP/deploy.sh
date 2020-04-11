@@ -59,27 +59,30 @@ if [ ! -f nginx/conf/nginx.conf ]; then
     fi
     sudo mkdir -p {nginx/{conf,log},wwwroot}
     echo "Start copying profile..."
-    sudo mv ./Config/LNMP/Nginx/Conf ./nginx/conf
+    sudo mv ./Config/LNMP/Nginx/Conf/ ./nginx/conf/
     sudo mv ./Config/LNMP/docker-compose.yml ./
     sudo mv ./Config/LNMP/Nginx/Html/index.html ./wwwroot/
     echo "Profile copy successfully..."
     
-    work_dir=/docker/Config/LNMP
+    work_dir=/docker/Config/LNMP/MySQL
     cd $work_dir
     echo "Building MySQL image..."
-    sudo docker build -f ./MySQL/Dockerfile -t mysql:8.0 .
+    sudo docker build -t mysql:8.0 .
     if [[ $? != 0 ]]; then
 	exit 1
     fi
 
+    work_dir=/docker/Config/LNMP/PHP/7.2
+    cd $work_dir
     echo "Building PHP image..."
-    sudo docker build -f ./PHP/Dockerfile -t php:7.2-fpm .
+    sudo docker build -t php:7.2-fpm .
     if [[ $? != 0 ]]; then
 	exit 1
     fi
 
+    work_dir=/docker/Config/LNMP/Nginx/Dockerfile
     echo "Building Nginx image..."
-    sudo docker build -f ./Nginx/Dockerfile/Dockerfile -t nginx:1.16 .
+    sudo docker build -t nginx:1.16 .
     if [[ $? != 0 ]]; then
 	exit 1;
     fi

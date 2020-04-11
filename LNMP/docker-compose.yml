@@ -1,4 +1,4 @@
-version : "1" #docker-compose的版本
+version : "3" #docker-compose的版本
 services: #容器的集合
         mysql:
                 image: mysql:8.0
@@ -27,6 +27,6 @@ services: #容器的集合
                 ports:
                         - 80:80
                 volumes:
-                        - /docker/nginx:/etc/nginx
+                        - /docker/nginx/conf:/etc/nginx
                         - /docker/nginx/log:/www/nginx/log
                         - /docker/wwwroot:/www/web

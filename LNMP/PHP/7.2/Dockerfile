@@ -58,8 +58,6 @@ RUN tar zxf /opt/soft/php-7.2.29.tar.gz -C /opt/build
 
 WORKDIR /opt/build/php-7.2.29
 
-RUN ./autoconf
-
 RUN ./configure \
     --prefix=/usr/local/php \
     --with-config-file-path=/usr/local/php/etc \
@@ -135,23 +133,23 @@ RUN  \
 
 
 #install composer
-RUN  mv /opt/soft/composer.phar   /usr/bin/composer
+RUN mv /opt/soft/composer.phar   /usr/bin/composer
 
-RUN  usermod -u 1000 shi
+RUN usermod -u 1000 shi
 
 #configure timezone
 RUN apt-get install -y ntp && ntpd -gq && service ntp start
 
-RUN     echo Asia/Shanghai >/etc/timezone && \
+RUN echo Asia/Shanghai >/etc/timezone && \
            dpkg-reconfigure -f noninteractive tzdata 
 
 # Define working directory.
 WORKDIR /
 RUN echo '#!/bin/bash' > /init.sh && \
-       echo '/etc/init.d/php-fpm restart' >> /init.sh && \
-       echo 'sudo su shi' && \
-       echo 'tail -f /usr/local/php/var/log/php-fpm.log' >> /init.sh && \
-       chmod 777 /init.sh
+    echo '/etc/init.d/php-fpm restart' >> /init.sh && \
+    echo 'sudo su shi' && \
+    echo 'tail -f /usr/local/php/var/log/php-fpm.log' >> /init.sh && \
+    chmod 777 /init.sh
 
 #ssh service
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -159,10 +157,10 @@ RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
 RUN echo "root:root" | chpasswd
 RUN echo "admin   ALL=(ALL)       ALL" >> /etc/sudoers
 
-RUN   sudo apt-get autoclean  && \
-          sudo apt-get clean  && \
-          sudo apt-get autoremove && \
-          sudo rm -rf /opt/  /tmp/
+RUN apt-get autoclean  && \
+    apt-get clean  && \
+    apt-get autoremove && \
+    rm -rf /opt/  /tmp/
 
 CMD ["/init.sh"]
 # Expose ports.
