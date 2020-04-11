@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 MAINTAINER shiqingsheng <shi_work@126.com>
 
 WORKDIR /etc/apt
