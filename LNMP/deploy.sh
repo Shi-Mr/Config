@@ -59,7 +59,7 @@ if [ ! -f nginx/conf/nginx.conf ]; then
     fi
     sudo mkdir -p {nginx/{conf,log},wwwroot}
     echo "Start copying profile..."
-    sudo mv ./Config/LNMP/Nginx/Conf/ ./nginx/conf/
+    sudo mv ./Config/LNMP/Nginx/Conf/* ./nginx/conf/
     sudo mv ./Config/LNMP/docker-compose.yml ./
     sudo mv ./Config/LNMP/Nginx/Html/index.html ./wwwroot/
     echo "Profile copy successfully..."
