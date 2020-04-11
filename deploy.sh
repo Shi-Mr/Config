@@ -57,4 +57,4 @@ if [ ! -f nginx/conf/nginx.conf ]; then
 fi
 
 echo "Starting container..."
-docker-compose up -d
+sudo docker-compose up -d
