@@ -58,12 +58,11 @@ if [ ! -d nginx/conf.d ]; then
     fi
     sudo mkdir -p {nginx/{conf.d,log},wwwroot}
     echo "Start copying profile..."
-    sudo mv ./Config/LNMP/Nginx/Conf/* ./nginx/conf.d/
-    sudo mv ./Config/LNMP/docker-compose.yml ./
-    sudo mv ./Config/LNMP/Nginx/Web/index.html ./wwwroot/
+    sudo mv ./Config/Intra/docker-compose.yml ./
+    sudo mv ./Config/Intra/Nginx/Source/default.conf ./nginx/conf.d/
     echo "Profile copy successfully..."
     
-    work_dir=/docker/Config/LNMP/MySQL
+    work_dir=/docker/Config/Intra/MySQL
     cd $work_dir
     echo "Building MySQL image..."
     sudo docker build -t mysql:8.0 .
@@ -71,7 +70,7 @@ if [ ! -d nginx/conf.d ]; then
 	exit 1
     fi
 
-    work_dir=/docker/Config/LNMP/PHP
+    work_dir=/docker/Config/Intra/PHP
     cd $work_dir
     echo "Building PHP image..."
     sudo docker build -t php:7.2-fpm .
@@ -79,7 +78,7 @@ if [ ! -d nginx/conf.d ]; then
 	exit 1
     fi
 
-    work_dir=/docker/Config/LNMP/Nginx/Dockerfile
+    work_dir=/docker/Config/Intra/Nginx
     cd $work_dir
     echo "Building Nginx image..."
     sudo docker build -t nginx:1.16 .
