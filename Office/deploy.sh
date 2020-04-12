@@ -22,11 +22,6 @@ if [[ -n $1 ]]; then
     #删除环境
     if [[ $1 = "remove" ]]; then
         sudo docker-compose down
-
-        work_dir=/
-        cd $work_dir
-        sudo rm -rf /docker
-
         exit 1
     fi
 fi
@@ -54,7 +49,7 @@ if [ ! -f nginx/conf/nginx.conf ]; then
     else
 	sudo git pull
     fi
-    if [[ $? != 0]]; then
+    if [[ $? != 0 ]]; then
 	exit 1
     fi
     echo "Profile download succeeded..."

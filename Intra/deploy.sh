@@ -22,11 +22,6 @@ if [[ -n $1 ]]; then
     #删除环境
     if [[ $1 = "remove" ]]; then
         sudo docker-compose down
-
-        work_dir=/
-        cd $work_dir
-        sudo rm -rf /docker
-
         exit 1
     fi
 fi
@@ -67,7 +62,7 @@ if [ ! -d nginx/conf.d ]; then
     work_dir=/docker/Config/Intra/MySQL
     cd $work_dir
     echo "Building MySQL image..."
-    sudo docker build -t mysql:8.0 .
+    sudo docker build -t mysql:intra-v1 .
     if [[ $? != 0 ]]; then
 	exit 1
     fi
@@ -75,7 +70,7 @@ if [ ! -d nginx/conf.d ]; then
     work_dir=/docker/Config/Intra/PHP
     cd $work_dir
     echo "Building PHP image..."
-    sudo docker build -t php:7.2-fpm .
+    sudo docker build -t php:intra-v1 .
     if [[ $? != 0 ]]; then
 	exit 1
     fi
@@ -83,7 +78,7 @@ if [ ! -d nginx/conf.d ]; then
     work_dir=/docker/Config/Intra/Nginx
     cd $work_dir
     echo "Building Nginx image..."
-    sudo docker build -t nginx:1.16 .
+    sudo docker build -t nginx:intra-v1 .
     if [[ $? != 0 ]]; then
 	exit 1;
     fi

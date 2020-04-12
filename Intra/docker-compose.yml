@@ -1,7 +1,7 @@
 version : "3" #docker-compose的版本
 services: #容器的集合
         mysql:
-                image: mysql:8.0
+                image: mysql:intra-v1
                 container_name: mysql
                 privileged: true
                 ports:
@@ -9,7 +9,7 @@ services: #容器的集合
                 environment:
                         MYSQL_ROOT_PASSWORD: root 
         php:
-                image: php:7.2-fpm
+                image: php:intra-v1
                 container_name: php
                 privileged: true
                 ports: 
@@ -19,7 +19,7 @@ services: #容器的集合
                 volumes:
                         - /docker/wwwroot:/www/web
         nginx:
-                image:  nginx:1.16
+                image:  nginx:intra-v1
                 container_name: nginx
                 privileged: true
                 links:
