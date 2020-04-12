@@ -21,8 +21,7 @@ if [[ -n $1 ]]; then
     fi
     #删除环境
     if [[ $1 = "remove" ]]; then
-        sudo docker-compose stop
-        sudo docker-compose rm
+        sudo docker-compose down
 
         work_dir=/
         cd $work_dir
@@ -48,7 +47,7 @@ fi
 work_dir=/docker
 cd $work_dir
 
-if [ ! -f nginx/conf/nginx.conf ]; then
+if [ ! -d nginx/conf.d ]; then
     if [ ! -d Config ]; then
         echo "Start downloading profile..."
         sudo git clone https://github.com/Shi-Mr/Config.git
@@ -57,11 +56,11 @@ if [ ! -f nginx/conf/nginx.conf ]; then
         fi
         echo "Profile download succeeded..."
     fi
-    sudo mkdir -p {nginx/{conf,log},wwwroot}
+    sudo mkdir -p {nginx/{conf.d,log},wwwroot}
     echo "Start copying profile..."
-    sudo mv ./Config/LNMP/Nginx/Conf/* ./nginx/conf/
+    sudo mv ./Config/LNMP/Nginx/Conf/* ./nginx/conf.d/
     sudo mv ./Config/LNMP/docker-compose.yml ./
-    sudo mv ./Config/LNMP/Nginx/Html/index.html ./wwwroot/
+    sudo mv ./Config/LNMP/Nginx/Web/index.html ./wwwroot/
     echo "Profile copy successfully..."
     
     work_dir=/docker/Config/LNMP/MySQL
@@ -81,13 +80,16 @@ if [ ! -f nginx/conf/nginx.conf ]; then
     fi
 
     work_dir=/docker/Config/LNMP/Nginx/Dockerfile
+    cd $work_dir
     echo "Building Nginx image..."
     sudo docker build -t nginx:1.16 .
     if [[ $? != 0 ]]; then
 	exit 1;
     fi
     
-    sudo rm -rf /docker/Config
+    work_dir=/docker
+    cd $work_dir
+    sudo rm -rf Config
 fi
 
 echo "Starting container..."

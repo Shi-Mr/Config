@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER shiqingsheng <shi_work@126.com>
 
 WORKDIR /etc/apt
@@ -46,19 +46,27 @@ RUN ./configure  \
     --with-zlib=/opt/build/zlib-1.2.11 && \
      make && make install
 
-RUN usermod -u 1000 nginx
+ARG user=www
+ARG group=www
+ARG uid=1000
+ARG gid=1000
 
-RUN mv /opt/soft/nginx.conf /etc/nginx/nginx.conf
-RUN mv /opt/soft/sites-enabled/* /etc/nginx/conf.d/
+#添加用户
+RUN groupadd -g ${gid} ${group} \
+    && useradd -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-RUN mkdir /www/web && mkdir /www/nginx/log
+RUN usermod -u 1000 www
 
-RUN chown -R nginx.nginx /www/web /www/nginx/log
+ADD ./Source/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /
+
+RUN mkdir www
+
 RUN echo '#!/bin/bash' > /init.sh && \
     echo '/etc/nginx/nginx -g "daemon off;"' >> /init.sh && \
-    chmod +x /init.sh
+    chmod +x /init.sh && \
+    chown -R www:www /www
 
 RUN rm -rf /opt/soft  /opt/build && \
     apt-get autoremove && \
@@ -66,5 +74,5 @@ RUN rm -rf /opt/soft  /opt/build && \
 
 CMD ["/init.sh"]
 EXPOSE 80
-VOLUME ["/opt"]
+VOLUME ["/www"]
 
