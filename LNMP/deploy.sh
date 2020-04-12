@@ -71,7 +71,7 @@ if [ ! -d nginx/conf.d ]; then
 	exit 1
     fi
 
-    work_dir=/docker/Config/LNMP/PHP/7.2
+    work_dir=/docker/Config/LNMP/PHP
     cd $work_dir
     echo "Building PHP image..."
     sudo docker build -t php:7.2-fpm .
