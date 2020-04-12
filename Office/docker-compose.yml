@@ -1,0 +1,40 @@
+version : "3" #docker-compose的版本
+services: #容器的集合
+        mysql:
+                image: mysql
+                container_name: mysql
+                privileged: true
+                ports:
+                        - 3306:3306
+                environment:
+                        MYSQL_ROOT_PASSWORD: root 
+        php:
+                image: php:7.2-fpm
+                container_name: php
+                privileged: true
+                ports: 
+                        - 9000:9000
+                links:
+                        - mysql
+                volumes:
+                        - /docker/wwwroot:/www/web
+        nginx:
+                image:  nginx
+                container_name: nginx
+                privileged: true
+                links:
+                        - php
+                ports:
+                        - 80:80
+                volumes:
+                        - /docker/nginx/vhost:/www/nginx/vhost
+                        - /docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+                        - /docker/nginx/log:/www/nginx/log
+                        - /docker/wwwroot:/www/web
+
+        redis: 
+                image: redis
+                container_name: redis
+                privileged: true
+                ports:
+                        - 6379:6379
