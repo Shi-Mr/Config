@@ -1,11 +1,7 @@
 # Config
-LNMP环境配置信息<br />
-
-2020-04-11<br />
-增加LNMP环境docker-compose.yml文件<br />
-增加Nginx的配置文件<br />
-
-增加傻瓜式脚本-官方镜像<br />
+<h3>LNMP环境配置信息:</h3>
+执行Office文件夹下面的deploy.sh脚本，拉取官方镜像创建容器。<br />
+执行Intra文件夹下面的deploy.sh脚本，根据MySQL、PHP、Nginx文件夹下面的Dockerfile文件创建容器。<br />
 #创建LNMP环境<br />
 ```
 /bin/bash deploy.sh
@@ -26,7 +22,3 @@ LNMP环境配置信息<br />
 ```
 /bin/bash deploy.sh down
 ```
-
-2020-04-12<br />
-增加LNMP环境的Dockerfile文件(LNMP文件夹)，操作命令同上。
-

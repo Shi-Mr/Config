@@ -48,14 +48,16 @@ work_dir=/docker
 cd $work_dir
 
 if [ ! -d nginx/conf.d ]; then
+    echo "Start downloading profile..."
     if [ ! -d Config ]; then
-        echo "Start downloading profile..."
         sudo git clone https://github.com/Shi-Mr/Config.git
-        if [[ $? != 0 ]]; then
-            exit 1
-        fi
-        echo "Profile download succeeded..."
+    else
+	sudo git pull
     fi
+    if [[ $? != 0 ]]; then
+	exit 1
+    fi
+    echo "Profile download succeeded..."
     sudo mkdir -p {nginx/{conf.d,log},wwwroot}
     echo "Start copying profile..."
     sudo mv ./Config/Intra/docker-compose.yml ./
@@ -85,10 +87,6 @@ if [ ! -d nginx/conf.d ]; then
     if [[ $? != 0 ]]; then
 	exit 1;
     fi
-    
-    work_dir=/docker
-    cd $work_dir
-    sudo rm -rf Config
 fi
 
 echo "Starting container..."
