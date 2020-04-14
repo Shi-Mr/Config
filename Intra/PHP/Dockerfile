@@ -63,6 +63,12 @@ RUN ./configure \
     --with-config-file-path=/usr/local/php/etc \
     --with-libdir=lib64 \
     --enable-mbstring \
+    --with-mysqli \
+    --with-pdo-mysql \
+    --with-iconv-dir \
+    --with-zlib \
+    --with-libxml-dir=/usr \
+    --enable-xml \
     --with-curl \
     --with-openssl \
     --with-xmlrpc \
@@ -77,7 +83,7 @@ RUN ./configure \
     --with-xsl \
     --enable-fpm \
     --without-pear \
-    --disable-phar \
+    --enable-phar \
     --with-fpm-user=www \
     --with-fpm-group=www &&\
     make && make install 
@@ -157,10 +163,12 @@ RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
 RUN echo "root:root" | chpasswd
 RUN echo "admin   ALL=(ALL)       ALL" >> /etc/sudoers
 
+RUN chmod 755 /usr/bin/composer
+
 RUN apt-get autoclean  && \
     apt-get clean  && \
     apt-get autoremove && \
-    rm -rf /opt/  /tmp/
+    rm -rf /opt/*  /tmp/*
 
 CMD ["/init.sh"]
 # Expose ports.
