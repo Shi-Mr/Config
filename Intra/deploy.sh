@@ -84,5 +84,7 @@ if [ ! -d nginx/conf.d ]; then
     fi
 fi
 
+sudo chown -R $USER:$USER /docker
+
 echo "Starting container..."
 sudo docker-compose up -d

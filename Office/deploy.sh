@@ -62,5 +62,7 @@ if [ ! -f nginx/conf/nginx.conf ]; then
     echo "Profile copy successfully..."
 fi
 
+sudo chown -R $USER:$USER /docker
+
 echo "Starting container..."
 sudo docker-compose up -d
