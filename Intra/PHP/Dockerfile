@@ -137,6 +137,20 @@ RUN  \
      echo 'xdebug.profiler_output_name = cachegrind.out.%t.%pc' >> /usr/local/php/etc/php.ini && \
      echo 'xdebug.idekey=PHPSTORM' >> /usr/local/php/etc/php.ini 
 
+#install xhprof
+RUN set -x \
+    && mkdir -p /usr/src/xhprof \
+    && tar zxf /opt/soft/xhprof-2.2.0.tgz -C /usr/src/xhprof --strip-components=1 \
+    && cd /usr/src/xhprof/extension \
+    && phpize \
+    && ./configure \
+    && make -j"$(nproc)" \
+    && make install \
+    && make clean
+
+RUN  \
+    echo 'extension=/usr/local/php/lib/php/extensions/no-debug-non-zts-20170718/xhprof.so' >> /usr/local/php/etc/php.ini && \
+    echo 'xhprof.output_dir=/www/web/xhprof/xhprof.d' >> /usr/local/php/etc/php.ini
 
 #install composer
 RUN mv /opt/soft/composer.phar   /usr/bin/composer
