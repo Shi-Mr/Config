@@ -127,6 +127,7 @@ RUN set -x \
     && make clean 
 
 RUN  \
+     echo '[xdebug]' >> /usr/local/php/etc/php.ini && \ 
      echo 'zend_extension=/usr/local/php/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so' >> /usr/local/php/etc/php.ini && \
      echo 'xdebug.remote_enable = on' >> /usr/local/php/etc/php.ini && \
      echo 'xdebug.remote_handler=dbgp' >> /usr/local/php/etc/php.ini && \
@@ -149,6 +150,7 @@ RUN set -x \
     && make clean
 
 RUN  \
+    echo '[xhporf]' /usr/local/php/etc/php.ini && \
     echo 'extension=/usr/local/php/lib/php/extensions/no-debug-non-zts-20170718/xhprof.so' >> /usr/local/php/etc/php.ini && \
     echo 'xhprof.output_dir=/www/web/xhprof/xhprof.d' >> /usr/local/php/etc/php.ini
 
